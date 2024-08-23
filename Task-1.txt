@@ -1,0 +1,90 @@
+create database library_management_system;
+
+use library_management_system;
+
+-- Create Books Table
+CREATE TABLE Books (
+    BookID INT PRIMARY KEY,
+    Title VARCHAR(255),
+    Author VARCHAR(255),
+    Publisher VARCHAR(255),
+    YearPublished INT
+);
+
+-- Create Members Table
+CREATE TABLE Members (
+    MemberID INT PRIMARY KEY,
+    FirstName VARCHAR(255),
+    LastName VARCHAR(255),
+    Email VARCHAR(255),
+    JoinDate DATE
+);
+
+-- Create Transactions Table
+CREATE TABLE Transactions (
+    TransactionID INT PRIMARY KEY,
+    BookID INT,
+    MemberID INT,
+    BorrowDate DATE,
+    ReturnDate DATE,
+    FOREIGN KEY (BookID) REFERENCES Books(BookID),
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+
+INSERT INTO Books (BookID, Title, Author, Publisher, YearPublished) VALUES (1,'Wings of Fire','A.P.J. Abdul Kalam','Universities Press',1999),(2,'Ignited Minds', 'A.P.J. Abdul Kalam', 'Penguin Books India',2002),(3,'My Journey', 'A.P.J. Abdul Kalam', 'Penguin Books India',2013);
+
+INSERT INTO Members (MemberID, FirstName, LastName, Email, JoinDate) VALUES (1, 'chetana', 'sree', 'chetana@gmail.com', '2023-07-01'),(2, 'sree', 'priya', 'sree@gmail.com', '2022-08-01'),(3s, 'sravani', 'g', 'srav@gmail.com', '2024-07-01');
+
+ INSERT INTO Transactions (TransactionID, BookID, MemberID, BorrowDate, ReturnDate) VALUES (1, 1, 1, '2023-07-29', NULL);
+
+
+-- Update a Book's information
+UPDATE Books
+SET Title = 'The Great Gatsby', Author = 'F. Scott Fitzgerald', Publisher = 'Scribner', YearPublished = 1925
+WHERE BookID = 1;
+
+-- Update a Member's information
+UPDATE Members
+SET FirstName = 'Jane', LastName = 'Doe', Email = 'jane.doe@example.com', JoinDate = '2023-07-02'
+WHERE MemberID = 1;
+
+-- Update a Transaction's ReturnDate
+UPDATE Transactions
+SET ReturnDate = '2023-07-22'
+WHERE TransactionID = 1;
+
+-- Delete a Transaction
+DELETE FROM Transactions
+WHERE TransactionID = 1;
+
+-- Delete a Member
+DELETE FROM Members
+WHERE MemberID = 1;
+
+-- Delete a Book
+DELETE FROM Books
+WHERE BookID = 1;
+
+-- Retrieve all Books
+SELECT * FROM Books;
+
+-- Retrieve all Members
+SELECT * FROM Members;
+
+-- Retrieve all Transactions
+SELECT * FROM Transactions;
+
+-- Retrieve all Books borrowed by a specific Member
+SELECT Books.*
+FROM Books
+JOIN Transactions ON Books.BookID = Transactions.BookID
+WHERE Transactions.MemberID = 1;
+
+-- Retrieve all Members who borrowed a specific Book
+SELECT Members.*
+FROM Members
+JOIN Transactions ON Members.MemberID = Transactions.MemberID
+WHERE Transactions.BookID = 1;
+
+
+
